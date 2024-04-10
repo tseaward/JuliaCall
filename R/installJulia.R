@@ -23,7 +23,7 @@ julia_latest_version <- function(){
 
 julia_url <- function(version){
     sysmachine <- Sys.info()["machine"]
-    arch <- if (sysmachine == "arm64") {
+    arch <- if (sysmachine %in% c("arm64", "aarch64")) {
         "aarch64"
     } else if (.Machine$sizeof.pointer == 8) {
         "x64"
