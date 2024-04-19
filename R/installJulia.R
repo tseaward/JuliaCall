@@ -32,7 +32,7 @@ julia_url <- function(version){
     } else {
         "x86"
     }
-    short_version <- substr(version, 1, 3)
+    short_version <- paste(strsplit(version, "[.]")[[1]][1:2], collapse = ".")
     sysname <- Sys.info()["sysname"]
     if (sysname == "Linux") {
         os <- "linux"
