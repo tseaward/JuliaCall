@@ -17,7 +17,9 @@ julia_latest_version <- function(){
     utils::download.file(url, file)
     versions <- rjson::fromJSON(file=file)
 
-    max(names(Filter(function(v) v$stable, versions)))
+    stable_versions <- names(Filter(function(v) v$stable, versions))
+    v <- as.numeric(gsub(".", "", stable_versions, fixed = TRUE))
+    return(stable_versions[v == max(v)])
 }
 
 
