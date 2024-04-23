@@ -17,20 +17,22 @@ julia_latest_version <- function(){
     utils::download.file(url, file)
     versions <- rjson::fromJSON(file=file)
 
-    max(names(Filter(function(v) v$stable, versions)))
+    stable_versions <- names(Filter(function(v) v$stable, versions))
+    v <- as.numeric(gsub(".", "", stable_versions, fixed = TRUE))
+    return(stable_versions[v == max(v)])
 }
 
 
 julia_url <- function(version){
     sysmachine <- Sys.info()["machine"]
-    arch <- if (sysmachine == "arm64") {
+    arch <- if (sysmachine %in% c("arm64", "aarch64")) {
         "aarch64"
     } else if (.Machine$sizeof.pointer == 8) {
         "x64"
     } else {
         "x86"
     }
-    short_version <- substr(version, 1, 3)
+    short_version <- paste(strsplit(version, "[.]")[[1]][1:2], collapse = ".")
     sysname <- Sys.info()["sysname"]
     if (sysname == "Linux") {
         os <- "linux"
