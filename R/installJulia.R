@@ -36,7 +36,7 @@ julia_url <- function(version){
     sysname <- Sys.info()["sysname"]
     if (sysname == "Linux") {
         os <- "linux"
-        slug <- "linux-x86_64"
+        slug <- ifelse(sysmachine == "aarch64", "linux-aarch64", "linux-x86_64")
         ext <- "tar.gz"
     } else if (sysname == "Darwin") {
         os <- "mac"
